@@ -1,4 +1,4 @@
-name: Release
+ï»¿name: Release
 
 on:
   push:
@@ -41,25 +41,22 @@ jobs:
 
     - name: Build and publish
       run: |
-        dotnet publish -c Release -r ${{ matrix.os }} --self-contained true -p:PublishSingleFile=true -p:PublishTrimmed=true -o ./publish/${{ matrix.os }}
+        dotnet publish -c Release -r ${{ matrix.os }} --self-contained true -p:PublishSingleFile=true -p:PublishTrimmed=true -p:DebugType=None -p:DebugSymbols=false -o ./publish/${{ matrix.os }}
 
-    - name: Create archive
+    - name: Rename executable
       run: |
         cd ./publish/${{ matrix.os }}
         if [ "${{ matrix.os }}" = "win-x64" ]; then
-          zip -r ../../ComptaFoldersCreator-${{ matrix.name }}-${{ matrix.os }}.zip *
+          mv ComptaFoldersCreator.exe ComptaFoldersCreator-${{ matrix.name }}-${{ matrix.os }}.exe
         else
-          tar -czf ../../ComptaFoldersCreator-${{ matrix.name }}-${{ matrix.os }}.tar.gz *
+          mv ComptaFoldersCreator ComptaFoldersCreator-${{ matrix.name }}-${{ matrix.os }}
         fi
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
         name: ComptaFoldersCreator-${{ matrix.name }}-${{ matrix.os }}
-        path: |
-          ComptaFoldersCreator-${{ matrix.name }}-${{ matrix.os }}.zip
-          ComptaFoldersCreator-${{ matrix.name }}-${{ matrix.os }}.tar.gz
-        if-no-files-found: ignore
+        path: ./publish/${{ matrix.os }}/ComptaFoldersCreator-${{ matrix.name }}-${{ matrix.os }}*
 
   release:
     needs: build
@@ -78,9 +75,11 @@ jobs:
     - name: Prepare release assets
       run: |
         mkdir -p ./release-assets
-        find ./artifacts -name "*.zip" -exec cp {} ./release-assets/ \;
-        find ./artifacts -name "*.tar.gz" -exec cp {} ./release-assets/ \;
+        find ./artifacts -type f -executable -exec cp {} ./release-assets/ \; 2>/dev/null || true
+        find ./artifacts -name "*.exe" -exec cp {} ./release-assets/ \;
+        find ./artifacts -name "ComptaFoldersCreator-*" -not -name "*.exe" -exec cp {} ./release-assets/ \;
         ls -la ./release-assets
+        chmod +x ./release-assets/ComptaFoldersCreator-* 2>/dev/null || true
 
     - name: Get version
       id: get_version
@@ -99,43 +98,43 @@ jobs:
         body: |
           ## ComptaFoldersCreator ${{ steps.get_version.outputs.version }}
           
-          ### ?? Nouvelle version de ComptaFoldersCreator !
+          ### ğŸš€ Nouvelle version de ComptaFoldersCreator !
           
-          Application console C# pour créer automatiquement une arborescence de dossiers organisée pour la gestion comptable annuelle.
+          Application console C# pour crÃ©er automatiquement une arborescence de dossiers organisÃ©e pour la gestion comptable annuelle.
           
-          ### ?? Téléchargements
+          ### ğŸ“¥ TÃ©lÃ©chargements directs
           
-          Choisissez la version correspondant à votre système d'exploitation :
+          TÃ©lÃ©chargez directement l'exÃ©cutable correspondant Ã  votre systÃ¨me d'exploitation :
           
-          - **Windows** : `ComptaFoldersCreator-Windows-win-x64.zip`
-          - **Linux** : `ComptaFoldersCreator-Linux-linux-x64.tar.gz`
-          - **macOS** : `ComptaFoldersCreator-macOS-osx-x64.tar.gz`
+          - **Windows** : `ComptaFoldersCreator-Windows-win-x64.exe`
+          - **Linux** : `ComptaFoldersCreator-Linux-linux-x64`
+          - **macOS** : `ComptaFoldersCreator-macOS-osx-x64`
           
-          ### ? Fonctionnalités
+          ### âœ¨ FonctionnalitÃ©s
           
-          - ? Création automatique d'une structure de dossiers par année
-          - ?? Organisation par mois (01 à 12)
-          - ?? Sous-dossiers standardisés : Achats, Factures émises, Relevés bancaires
-          - ?? Interface colorée pour distinguer les résultats
-          - ?? Détection intelligente des dossiers existants
+          - âœ… CrÃ©ation automatique d'une structure de dossiers par annÃ©e
+          - ğŸ“ Organisation par mois (01 Ã  12)
+          - ğŸ“‹ Sous-dossiers standardisÃ©s : Achats, Factures Ã©mises, RelevÃ©s bancaires
+          - ğŸ¨ Interface colorÃ©e pour distinguer les rÃ©sultats
+          - ğŸ” DÃ©tection intelligente des dossiers existants
           
-          ### ?? Prérequis
+          ### ğŸ“‹ PrÃ©requis
           
-          - .NET 8.0 ou version ultérieure (inclus dans les exécutables self-contained)
+          - **Aucun prÃ©requis** : Les exÃ©cutables sont self-contained et incluent le runtime .NET 8
           - Windows, macOS ou Linux
           
-          ### ?? Utilisation
+          ### ğŸš€ Utilisation
           
-          1. Téléchargez l'archive correspondant à votre OS
-          2. Extrayez l'archive
-          3. Exécutez `ComptaFoldersCreator` (ou `ComptaFoldersCreator.exe` sur Windows)
-          4. Suivez les instructions à l'écran
+          1. TÃ©lÃ©chargez l'exÃ©cutable correspondant Ã  votre OS
+          2. Sur Linux/macOS, rendez le fichier exÃ©cutable : `chmod +x ComptaFoldersCreator-*`
+          3. ExÃ©cutez directement le fichier
+          4. Suivez les instructions Ã  l'Ã©cran
           
           ---
           
-          **Installation complète** : Les exécutables sont self-contained et incluent le runtime .NET 8, aucune installation supplémentaire n'est requise.
+          **Installation complÃ¨te** : Aucune installation supplÃ©mentaire requise. TÃ©lÃ©chargez, exÃ©cutez, c'est tout !
         files: ./release-assets/*
         draft: false
         prerelease: false
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
