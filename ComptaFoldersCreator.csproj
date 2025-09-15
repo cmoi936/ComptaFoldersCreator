@@ -5,6 +5,28 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    
+    <!-- Informations sur l'application -->
+    <AssemblyTitle>ComptaFoldersCreator</AssemblyTitle>
+    <AssemblyDescription>Application console pour créer automatiquement une arborescence de dossiers organisée pour la gestion comptable annuelle</AssemblyDescription>
+    <AssemblyProduct>ComptaFoldersCreator</AssemblyProduct>
+    <AssemblyCopyright>Copyright © 2024</AssemblyCopyright>
+    
+    <!-- Informations de version -->
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    
+    <!-- Configuration pour la publication -->
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimMode>link</TrimMode>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include=".github\workflows\build.yml" />
+    <None Include=".github\workflows\release.yml" />
+  </ItemGroup>
 
 </Project>
