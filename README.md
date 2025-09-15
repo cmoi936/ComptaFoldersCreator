@@ -6,15 +6,15 @@ ComptaFoldersCreator est une application console C# qui permet de créer automati
 
 ## Fonctionnalités
 
-- ? Création automatique d'une structure de dossiers par année
-- ?? Organisation par mois (01 à 12)  
-- ?? Sous-dossiers standardisés pour chaque mois :
+- :white_check_mark: Création automatique d'une structure de dossiers par année
+- :file_folder: Organisation par mois (01 à 12)  
+- :clipboard: Sous-dossiers standardisés pour chaque mois :
   - **Achats** - Documents d'achat et factures fournisseurs
   - **Factures émises** - Factures clients émises
   - **Relevés bancaires** - Relevés et documents bancaires
-- ?? Interface colorée pour distinguer les résultats
-- ?? Détection intelligente des dossiers existants
-- ?? Configuration du répertoire de destination
+- :art: Interface colorée pour distinguer les résultats
+- :mag: Détection intelligente des dossiers existants
+- :gear: Configuration du répertoire de destination
 
 ## Prérequis
 
@@ -49,10 +49,10 @@ ComptaFoldersCreator est une application console C# qui permet de créer automati
 
 L'application utilise un système de couleurs pour indiquer le résultat :
 
-- ?? **VERT** : Arborescence créée avec succès
-- ?? **CYAN** : Arborescence déjà existante  
-- ?? **JAUNE** : Avertissement (année invalide)
-- ?? **ROUGE** : Erreur lors de la création
+- :green_circle: **VERT** : Arborescence créée avec succès
+- :large_blue_circle: **CYAN** : Arborescence déjà existante  
+- :yellow_circle: **JAUNE** : Avertissement (année invalide)
+- :red_circle: **ROUGE** : Erreur lors de la création
 
 ## Compilation et exécution
 
