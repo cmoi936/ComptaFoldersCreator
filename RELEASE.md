@@ -6,7 +6,7 @@ Ce document explique comment créer une nouvelle release de ComptaFoldersCreator.
 
 ### Option 1: Via tag Git (recommandé)
 
-1. **Créer et pousser un tag de version :**
+1. **Créer et pousser un tag de version** :
    ```bash
    # Linux/macOS
    ./create-release.sh v1.0.0
@@ -15,7 +15,7 @@ Ce document explique comment créer une nouvelle release de ComptaFoldersCreator.
    .\create-release.ps1 v1.0.0
    ```
 
-2. **Ou manuellement :**
+2. **Ou manuellement** :
    ```bash
    git tag -a v1.0.0 -m "Release v1.0.0"
    git push origin v1.0.0
@@ -69,12 +69,12 @@ Le projet suit le versioning sémantique (SemVer) :
 
 ## Avant de créer une release
 
-1. ? Tester l'application localement
-2. ? Mettre à jour le README si nécessaire
-3. ? Vérifier que les workflows CI passent
-4. ? Mettre à jour la version dans `ComptaFoldersCreator.csproj`
-5. ? Commit et push les changements
-6. ? Créer le tag de release
+1. :white_check_mark: Tester l'application localement
+2. :memo: Mettre à jour le README si nécessaire
+3. :mag: Vérifier que les workflows CI passent
+4. :package: Mettre à jour la version dans `ComptaFoldersCreator.csproj`
+5. :floppy_disk: Commit et push les changements
+6. :label: Créer le tag de release
 
 ## Post-release
 
